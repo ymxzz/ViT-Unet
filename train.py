@@ -19,8 +19,6 @@ if __name__ == "__main__":
     random_seed = 3407 # 233
     torch.manual_seed(random_seed) # 设定随机数种子,固定每次开始程序训练的初始权重
     
-    #imgList = glob(r"D:\lits_train\scan\*.nii")
-    #maskList = glob(r"D:\lits_train\label\*.nii")
     imgList = glob(r".\img\*.nii.gz")
     maskList = glob(r".\mask\*.nii.gz")
     # 412,28
@@ -36,9 +34,7 @@ if __name__ == "__main__":
                                   shuffle=True)
     
     model = Unet3d()
-    #model = Unet()
-    #model = SwinUNETR(img_size=(32, 96, 96),in_channels=1,out_channels=2,feature_size=24)
-    #model = UNETR()
+  
     model.load_state_dict(torch.load("./Data/net.pth"))  # 1e-5 # 1e-4,1e-5
     optimizer = optim.Adam(params=model.parameters(),lr=1e-4)
     #exp_lr_scheduler = lr.StepLR(optimizer, step_size=50, gamma=0.25)
@@ -67,8 +63,6 @@ if __name__ == "__main__":
     Dice_val_list = torch.load("./Data/Dice_val_list.pt").tolist()
     '''
 
-    
-    #torch.backends.cudnn.enable = True
 
     model.cuda() #模型放到GPU
     # 开始训练
